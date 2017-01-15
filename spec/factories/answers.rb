@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :answer do
-    body "MyText #{'A' * 20}"
+    body Faker::Lorem.characters(50)
     question
 
     trait :invalid_body do

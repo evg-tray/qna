@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :question do
-    title "MyString #{'A' * 10}"
-    body "MyText #{'A' * 20}"
+    title Faker::Lorem.characters(30)
+    body Faker::Lorem.characters(50)
 
     trait :invalid do
       title nil
