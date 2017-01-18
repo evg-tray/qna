@@ -1,7 +1,8 @@
 FactoryGirl.define do
   factory :answer do
-    body Faker::Lorem.characters(50)
+    body { Faker::Lorem.characters(50) }
     question
+    user
 
     trait :invalid_body do
       body nil

@@ -1,0 +1,19 @@
+h1
+  = @question.title
+p
+  = @question.body
+- if user_signed_in? && current_user == @question.user
+  = link_to 'Delete question', question_path(@question), method: :delete
+
+h2 Answers:
+- @question.answers.each do |answer|
+  p
+    = answer.body
+  - if user_signed_in? && current_user == @question.user
+    = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+br
+- if user_signed_in?
+  = form_for [@question, @question.answers.build] do |f|
+    = f.label :body
+    = f.text_area :body
+    = f.submit 'Create answer'
