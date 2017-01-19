@@ -6,7 +6,7 @@ feature 'Delete answer', %q{
 
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
-  given(:answer) { create(:answer, question: question, user: user) }
+  given!(:answer) { create(:answer, question: question, user: user) }
 
   scenario 'Authenticated user delete his answer' do
     sign_in(user)
@@ -20,7 +20,6 @@ feature 'Delete answer', %q{
   scenario 'Authenticated user delete another answer' do
     user2 = create(:user)
     sign_in(user2)
-    answer
     visit question_path(question)
 
     expect(page).not_to have_content 'Delete answer'

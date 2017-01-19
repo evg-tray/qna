@@ -5,7 +5,7 @@ feature 'View questions', %q{
 } do
 
   scenario 'Any user view questions' do
-    questions = [create(:question), create(:question)]
+    questions = create_list(:question, 2)
     visit questions_path
 
     expect(page).to have_content questions[0].title
@@ -13,7 +13,7 @@ feature 'View questions', %q{
   end
 
   scenario 'Any user view question and answers' do
-    questions = [create(:question, :with_answers), create(:question, :with_answers)]
+    questions = create_list(:question, 2, :with_answers)
     visit questions_path
     click_on questions[0].title
 

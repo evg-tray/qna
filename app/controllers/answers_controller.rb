@@ -1,25 +1,21 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:new, :create, :destroy]
-
-  def new
-    @answer = @question.answers.new
-  end
+  before_action :set_question, only: [:create, :destroy]
 
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     if @answer.save
       flash[:notice] = 'Your answer successfully created.'
-      redirect_to @question
     else
-      render :new
+      flash[:notice] = 'Your answer is invalid.'
     end
+    redirect_to @question
   end
 
   def destroy
     @answer = Answer.find(params[:id])
-    if current_user == @answer.user
+    if current_user.author_of?(@answer)
       @answer.destroy
     end
     redirect_to @question

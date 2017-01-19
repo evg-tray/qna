@@ -1,18 +1,5 @@
 RSpec.describe AnswersController, type: :controller do
   let(:question) { create(:question) }
-  describe 'GET #new' do
-    sign_in_user
-    before { get :new, params: {question_id: question} }
-
-    it 'Assigns a new Answer to @answer' do
-      expect(assigns(:answer)).to be_a_new(Answer)
-    end
-
-    it 'render new view' do
-      expect(response).to render_template :new
-    end
-  end
-
   describe 'POST #create' do
     sign_in_user
     let!(:create_post_params) { {answer: attributes_for(:answer), question_id: question} }
@@ -39,9 +26,9 @@ RSpec.describe AnswersController, type: :controller do
         expect { create_post.call(create_post_invalid_params) }.to_not change(Answer, :count)
       end
 
-      it 'render new view' do
+      it 'redirect to show view with question route' do
         create_post.call(create_post_invalid_params)
-        expect(response).to render_template :new
+        expect(response).to redirect_to question_path(assigns(:question))
       end
     end
   end

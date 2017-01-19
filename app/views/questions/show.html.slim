@@ -2,15 +2,13 @@ h1
   = @question.title
 p
   = @question.body
-- if user_signed_in? && current_user == @question.user
-  = link_to 'Delete question', question_path(@question), method: :delete
+= link_to_delete_question(@question)
 
 h2 Answers:
 - @question.answers.each do |answer|
   p
     = answer.body
-  - if user_signed_in? && current_user == @question.user
-    = link_to 'Delete answer', question_answer_path(@question, answer), method: :delete
+  = link_to_delete_answer(@question, answer)
 br
 - if user_signed_in?
   = form_for [@question, @question.answers.build] do |f|
