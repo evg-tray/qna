@@ -1,0 +1,5 @@
+- @question.answers.each do |answer|
+  - unless answer.id.nil?
+    p
+      = answer.body
+    = link_to_delete_answer(@question, answer)
