@@ -1,0 +1,17 @@
+h1
+  = @question.title
+p
+  = @question.body
+= link_to_delete_question(@question)
+
+h2 Answers:
+- @question.answers.each do |answer|
+  p
+    = answer.body
+  = link_to_delete_answer(@question, answer)
+br
+- if user_signed_in?
+  = form_for [@question, @question.answers.build] do |f|
+    = f.label :body
+    = f.text_area :body
+    = f.submit 'Create answer'
