@@ -4,8 +4,6 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.create(answer_params)
-    @answer.user = current_user
-    @answer.save
   end
 
   def destroy
@@ -23,6 +21,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body).merge(user_id: current_user.id)
   end
 end
