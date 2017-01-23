@@ -1,3 +1,5 @@
+require_relative '../acceptance_helper'
+
 feature 'Create answer', %q{
   In order to help find solution on question
   As user

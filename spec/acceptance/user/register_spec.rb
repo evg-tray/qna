@@ -1,3 +1,5 @@
+require_relative '../acceptance_helper'
+
 feature 'Register user', %q{
   In order to be able to ask question
   As non-authenticated user

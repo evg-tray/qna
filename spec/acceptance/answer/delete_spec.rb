@@ -1,3 +1,5 @@
+require_relative '../acceptance_helper'
+
 feature 'Delete answer', %q{
   In order to be able delete wrong answer
   As user
