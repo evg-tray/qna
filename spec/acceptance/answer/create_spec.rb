@@ -29,7 +29,7 @@ feature 'Create answer', %q{
     fill_in 'Body', with: '333'
     click_on 'Create answer'
 
-    expect(page).not_to have_content '333'
+    expect(page).to have_content 'Body is too short (minimum is 20 characters)'
 
   end
 

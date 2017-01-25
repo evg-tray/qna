@@ -1,0 +1,10 @@
+= link_to 'Edit', '', class: 'edit-question-link'
+= form_for [question], remote: true do |f|
+  .question-errors
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+  p= f.submit 'Save'

@@ -1,0 +1,7 @@
+.question
+  h1
+    = question.title
+  p
+    = question.body
+  =' link_to_delete_question(question)
+  = link_to_edit_question_with_form(question)

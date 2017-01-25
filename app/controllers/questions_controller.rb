@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :set_question, only: [:show, :destroy]
+  before_action :set_question, only: [:show, :update, :destroy, :set_best_answer]
 
   def index
     @questions = Question.all
@@ -24,10 +24,12 @@ class QuestionsController < ApplicationController
   def show
   end
 
+  def update
+    @question.update(question_params) if current_user.author_of?(@question)
+  end
+
   def destroy
-    if current_user.author_of?(@question)
-      @question.destroy
-    end
+    @question.destroy if current_user.author_of?(@question)
     redirect_to questions_path
   end
 
