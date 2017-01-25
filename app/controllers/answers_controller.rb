@@ -3,14 +3,9 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:create, :destroy]
 
   def create
-    @answer = @question.answers.new(answer_params)
+    @answer = @question.answers.create(answer_params)
     @answer.user = current_user
-    if @answer.save
-      flash[:notice] = 'Your answer successfully created.'
-    else
-      flash[:notice] = 'Your answer is invalid.'
-    end
-    redirect_to @question
+    @answer.save
   end
 
   def destroy
