@@ -24,6 +24,22 @@ feature 'Set best answer', %q{
     expect(page).to have_content 'Best answer:'
   end
 
+  scenario 'Authenticated user set another best answer to his question', js: true do
+    sign_in(user)
+    question.set_best_answer(answer)
+    answer2 = create(:answer, question: question)
+    visit question_path(question)
+
+    within ".answer-#{answer.id}" do
+      expect(page).to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer2.id}" do
+      click_on 'Set best'
+      expect(page).to have_content 'Best answer:'
+    end
+  end
+
   scenario 'Authenticated user tries set best answer for not his question' do
     user2 = create(:user)
     sign_in(user2)

@@ -1,5 +1,2 @@
-- unless @question.best_answer.nil?
-  = render 'questions/answer', question: @question, answer: Answer.find(@question.best_answer)
-- @question.answers.each do |answer|
-  - unless @question.best_answer == answer.id
-    = render 'questions/answer', question: @question, answer: answer
+- @question.answers.best_first.each do |answer|
+  = render 'questions/answer', question: @question, answer: answer

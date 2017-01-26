@@ -82,15 +82,6 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'change question attributes' do
-      title = Faker::Lorem.characters(25)
-      body = Faker::Lorem.characters(50)
-      patch :update, params: {id: question, question: {title: title, body: body}, format: :js}
-      question.reload
-      expect(question.title).to eq title
-      expect(question.body).to eq body
-    end
-
     it 'render update template' do
       patch :update, params: {id: question, question: attributes_for(:question), format: :js}
       expect(response).to render_template :update

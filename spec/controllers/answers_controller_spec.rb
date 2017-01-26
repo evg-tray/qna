@@ -47,13 +47,6 @@ RSpec.describe AnswersController, type: :controller do
       expect(assigns(:question)).to eq question
     end
 
-    it 'change answer attributes' do
-      body = Faker::Lorem.characters(50)
-      patch :update, params: {id: answer, answer: {body: body}, question_id: question, format: :js}
-      answer.reload
-      expect(answer.body).to eq body
-    end
-
     it 'render update template' do
       patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
       expect(response).to render_template :update
@@ -82,7 +75,7 @@ RSpec.describe AnswersController, type: :controller do
     it 'set an answer as a best' do
       post :set_best_answer, params: { question_id: question2.id, answer_id: answer.id, format: :js }
       question2.reload
-      expect(question2.best_answer).to eq answer.id
+      expect(question2.best_answer).to eq answer
     end
 
     it 'render set_best_answer template' do

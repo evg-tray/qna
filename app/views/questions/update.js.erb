@@ -2,7 +2,7 @@
   $('.question-errors').html('');
   <% @question.errors.full_messages.each do |message| %>
     $('.question-errors').append('<%= j message %><br>');
-<% end %>
+  <% end %>
 <% else %>
   $('.question').html('<%= j render 'questions/question', question: @question %>');
 <% end %>
