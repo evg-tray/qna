@@ -47,4 +47,51 @@ feature 'Set best answer', %q{
 
     expect(page).to_not have_link 'Set best'
   end
+
+  scenario 'Question should be only one best answer', js: true do
+    sign_in(user)
+    question.set_best_answer(answer)
+    answer2 = create(:answer, question: question)
+    answer3 = create(:answer, question: question)
+
+    visit question_path(question)
+
+    within ".answer-#{answer.id}" do
+      expect(page).to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer2.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer3.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer2.id}" do
+      click_on 'Set best'
+      expect(page).to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer3.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer3.id}" do
+      click_on 'Set best'
+      expect(page).to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+
+    within ".answer-#{answer2.id}" do
+      expect(page).not_to have_content 'Best answer:'
+    end
+  end
 end

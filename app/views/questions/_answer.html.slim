@@ -5,7 +5,9 @@
         b Best answer:
     p
       = answer.body
-    =' link_to_delete_answer(question, answer)
-    =' link_to_edit_answer_with_form(question, answer)
+    = link_to_delete_answer(question, answer)
+    | &nbsp
+    = link_to_edit_answer_with_form(question, answer)
+    | &nbsp
     = link_to_set_best_answer(question, answer)
     hr
