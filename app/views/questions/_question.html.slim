@@ -3,6 +3,7 @@
     = question.title
   p
     = question.body
+  = render 'attachments/attachments', obj: question
   = link_to_delete_question(question)
   | &nbsp
   = link_to_edit_question_with_form(question)

@@ -1,0 +1,3 @@
+<% if @attachment.destroyed? %>
+  $('li.attachment-<%= @attachment.id %>').remove();
+<% end %>
