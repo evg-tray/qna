@@ -73,6 +73,21 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    sign_in_user
+    let!(:question) { create(:question, user: @user) }
+
+    it 'assigns the requested question to @question' do
+      patch :update, params: {id: question, question: attributes_for(:question), format: :js}
+      expect(assigns(:question)).to eq question
+    end
+
+    it 'render update template' do
+      patch :update, params: {id: question, question: attributes_for(:question), format: :js}
+      expect(response).to render_template :update
+    end
+  end
+
   describe 'DELETE #destroy' do
     sign_in_user
     let!(:question) { create(:question, user: @user) }

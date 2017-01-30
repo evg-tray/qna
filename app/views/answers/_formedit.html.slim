@@ -1,0 +1,5 @@
+= link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+= form_for [question, answer], remote: true do |f|
+  div class="answer-errors-#{answer.id}"
+  p= f.text_area :body
+  p= f.submit 'Save'

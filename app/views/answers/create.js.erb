@@ -1,2 +1,10 @@
-$('.answers').append('<%= j render 'questions/answer', question: @question, answer: @answer %>');
-$('#answer_body').val('');
+<% if @answer.errors.present? %>
+  $('.answer-errors').html('');
+  <% @answer.errors.full_messages.each do |message| %>
+    $('.answer-errors').append('<%= j message %><br>');
+  <% end %>
+<% else %>
+  $('.answers').append('<%= j render 'questions/answer', question: @question, answer: @answer %>');
+  $('#new_answer #answer_body').val('');
+  $('.answer-errors').html('');
+<% end %>

@@ -1,8 +1,4 @@
-h1
-  = @question.title
-p
-  = @question.body
-= link_to_delete_question(@question)
+= render 'questions/question', question: @question
 
 h2 Answers:
 .answers
@@ -11,5 +7,6 @@ br
 - if user_signed_in?
   = form_for [@question, @question.answers.build], remote: true do |f|
     = f.label :body
+    .answer-errors
     = f.text_area :body
     = f.submit 'Create answer'

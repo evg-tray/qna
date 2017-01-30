@@ -1,3 +1,5 @@
+require_relative '../acceptance_helper'
+
 feature 'User log out', %q{
   In order to end session
   As an user

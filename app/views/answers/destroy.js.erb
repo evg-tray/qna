@@ -1,0 +1,3 @@
+<% if @answer.destroyed? %>
+  $('.answer-<%= @answer.id %>').remove();
+<% end %>
