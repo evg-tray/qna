@@ -37,19 +37,31 @@ RSpec.describe AnswersController, type: :controller do
     sign_in_user
     let!(:answer) { create(:answer, question: question, user: @user) }
 
-    it 'assigns the requested answer to @answer' do
-      patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
-      expect(assigns(:answer)).to eq answer
+    context 'Author edit his answer' do
+      it 'assigns the requested answer to @answer' do
+        patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'assigns the @question' do
+        patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
+        expect(assigns(:question)).to eq question
+      end
+
+      it 'render update template' do
+        patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
+        expect(response).to render_template :update
+      end
     end
 
-    it 'assigns the @question' do
-      patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
-      expect(assigns(:question)).to eq question
-    end
-
-    it 'render update template' do
-      patch :update, params: {id: answer, answer: attributes_for(:answer), question_id: question, format: :js}
-      expect(response).to render_template :update
+    context 'User tries edit answer of another author' do
+      let!(:answer2) { create(:answer, question: question) }
+      it 'dont change body of answer after update' do
+        body = Faker::Lorem.characters(50)
+        patch :update, params: {id: answer2, answer: { body: body }, question_id: question, format: :js}
+        answer2.reload
+        expect(answer2.body).not_to eq body
+      end
     end
   end
 
