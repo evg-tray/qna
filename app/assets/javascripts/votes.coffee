@@ -10,10 +10,6 @@ votes = ->
       $('.' + response.name + '-up-down-' + response.id).removeClass('hidden')
       $('.' + response.name + '-del-' + response.id).addClass('hidden')
       $('.' + response.name + '-del-' + response.id + ' a').attr('href', "#")
-  #.bind 'ajax:error', (e, xhr, status, error) ->
-    #response = $.parseJSON(xhr.responseText)
-    #$.each errors, (index, value) ->
-      #$('.answer-errors').append(value)
 
 $(document).ready(votes);
 $(document).on('page:load', votes);
