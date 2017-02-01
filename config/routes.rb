@@ -7,4 +7,5 @@ Rails.application.routes.draw do
       match "/set_best_answer" => "answers#set_best_answer", :via => :post, :as => :set_best_answer
     end
   end
+  resources :attachments, only: [:destroy]
 end

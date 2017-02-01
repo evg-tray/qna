@@ -5,8 +5,13 @@ h2 Answers:
   = render 'answers'
 br
 - if user_signed_in?
-  = form_for [@question, @question.answers.build], remote: true do |f|
+  = form_for [@question, @answer], remote: true do |f|
     = f.label :body
     .answer-errors
     = f.text_area :body
+    p
+      = f.fields_for :attachments do |a|
+        = render 'attachment_fields', f: a
+      .links
+        = link_to_add_association 'Add file', f, :attachments
     = f.submit 'Create answer'

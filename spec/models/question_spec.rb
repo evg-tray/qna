@@ -7,6 +7,8 @@ RSpec.describe Question, type: :model do
   it { should have_many(:answers).dependent(:destroy) }
   it { should belong_to(:user) }
   it { should belong_to(:best_answer).class_name('Answer') }
+  it { should have_many(:attachments) }
+  it { should accept_nested_attributes_for(:attachments) }
 
   describe 'set best answer' do
     let(:question) { create(:question) }
