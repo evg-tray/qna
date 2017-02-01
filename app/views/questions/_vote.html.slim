@@ -1,0 +1,15 @@
+b.rating= obj.rating
+| &nbsp
+- if user_signed_in? && ! current_user.author_of?(obj)
+  - user_voted = current_user.voted_of?(obj)
+  - obj_name = obj.class.name.underscore
+  div class="#{obj_name}-del-#{obj.id} #{'hidden' unless user_voted}"
+    = link_to 'Delete vote', user_voted ? vote_path(current_user.find_vote(obj)) : '#',
+            method: :delete, remote: true, data: { type: :json }
+  div class="#{obj_name}-up-down-#{obj.id} #{'hidden' if user_voted}"
+    = link_to 'Up', votes_path(votable_id: obj.id, votable_type: obj.class.name, up: true),
+            method: :post, remote: true, data: { type: :json }
+    | &nbsp
+    = link_to 'Down', votes_path(votable_id: obj.id, votable_type: obj.class.name, up: false),
+            method: :post, remote: true, data: { type: :json }
+  div class="#{obj_name}-errors-#{obj.id}"

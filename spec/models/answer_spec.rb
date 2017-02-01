@@ -7,4 +7,5 @@ RSpec.describe Answer, type: :model do
   it { should have_one(:best_for_question).class_name('Question').dependent(:nullify).with_foreign_key(:best_answer_id) }
   it { should have_many(:attachments) }
   it { should accept_nested_attributes_for(:attachments) }
+  it_behaves_like 'votable'
 end

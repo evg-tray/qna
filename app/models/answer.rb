@@ -1,4 +1,5 @@
 class Answer < ApplicationRecord
+  include Votable
   belongs_to :question
   belongs_to :user
   has_one :best_for_question, class_name: 'Question', dependent: :nullify, foreign_key: :best_answer_id
