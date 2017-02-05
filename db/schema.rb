@@ -65,12 +65,12 @@ ActiveRecord::Schema.define(version: 20170131163625) do
   create_table "votes", force: :cascade do |t|
     t.integer  "rating"
     t.integer  "user_id"
-    t.integer  "votable_id"
-    t.string   "votable_type"
+    t.integer  "votable_id",   null: false
+    t.string   "votable_type", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
-    t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type", using: :btree
+    t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type", unique: true, using: :btree
   end
 
   add_foreign_key "answers", "questions"

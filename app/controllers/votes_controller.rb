@@ -2,19 +2,12 @@ class VotesController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    if ['Answer', 'Question'].include?(params[:votable_type])
-      @votable = params[:votable_type].constantize.find(params[:votable_id])
-      if current_user.author_of?(@votable) || current_user.voted_of?(@votable)
-        render_error
+    if Vote.types.include?(params[:votable_type])
+      @vote = Vote.new(vote_params)
+      if @vote.save
+        render_success(@vote.votable, @vote.id, 'create')
       else
-        @vote = @votable.votes.build
-        @vote.user = current_user
-        @vote.rating = params[:up] == 'true' ? 1 : -1
-        if @vote.save
-          render_success(@votable, @vote.id, 'create')
-        else
-          render_error
-        end
+        render_error
       end
     else
       render_error
@@ -45,5 +38,10 @@ class VotesController < ApplicationController
 
   def render_error
     render json: { error_text: 'Error to vote.' }, status: :unprocessable_entity
+  end
+
+  def vote_params
+    votable = params[:votable_type].constantize.find(params[:votable_id])
+    { user: current_user, rating: params[:up] == 'true' ? 1 : -1, votable: votable }
   end
 end
