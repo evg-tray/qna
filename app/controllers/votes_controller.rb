@@ -3,9 +3,9 @@ class VotesController < ApplicationController
 
   def create
     if Vote.types.include?(params[:votable_type])
-      @vote = Vote.new(vote_params)
+      @vote = votable.votes.build(vote_params)
       if @vote.save
-        render_success(@vote.votable, @vote.id, 'create')
+        render_success(votable, @vote.id, 'create')
       else
         render_error
       end
@@ -40,8 +40,11 @@ class VotesController < ApplicationController
     render json: { error_text: 'Error to vote.' }, status: :unprocessable_entity
   end
 
+  def votable
+    @votable ||= params[:votable_type].constantize.find(params[:votable_id])
+  end
+
   def vote_params
-    votable = params[:votable_type].constantize.find(params[:votable_id])
-    { user: current_user, rating: params[:up] == 'true' ? 1 : -1, votable: votable }
+    { user: current_user, rating: params[:up] == 'true' ? 1 : -1 }
   end
 end
