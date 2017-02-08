@@ -1,0 +1,12 @@
+b.rating= obj.rating
+| &nbsp
+- if user_signed_in? && ! current_user.author_of?(obj)
+  div class= delete_vote_class(obj)
+    = link_to 'Delete vote', delete_vote_path(obj),
+            method: :delete, remote: true, data: { type: :json }
+  div class= up_down_vote_class(obj)
+    = link_to 'Up', votes_path(votable_id: obj.id, votable_type: obj.class.name, up: true),
+            method: :post, remote: true, data: { type: :json }
+    | &nbsp
+    = link_to 'Down', votes_path(votable_id: obj.id, votable_type: obj.class.name, up: false),
+            method: :post, remote: true, data: { type: :json }

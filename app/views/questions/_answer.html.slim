@@ -5,6 +5,8 @@
         b Best answer:
     p
       = answer.body
+    div class="answer-votes-#{answer.id}"
+      = render 'questions/vote', obj: answer
     = render 'attachments/attachments', obj: answer
     = link_to_delete_answer(question, answer)
     | &nbsp
