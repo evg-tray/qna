@@ -39,4 +39,29 @@ feature 'Create question', %q{
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end
+
+  scenario 'question appears to another user page', js: true do
+    title = Faker::Lorem.characters(30)
+    body = Faker::Lorem.characters(55)
+
+    Capybara.using_session('user') do
+      sign_in(user)
+      visit questions_path
+    end
+
+    Capybara.using_session('another_user') do
+      visit questions_path
+    end
+
+    Capybara.using_session('user') do
+      click_on 'Ask question'
+      fill_in 'Title', with: title
+      fill_in 'Body', with: body
+      click_on 'Create'
+    end
+
+    Capybara.using_session('another_user') do
+      expect(page).to have_content title
+    end
+  end
 end

@@ -10,3 +10,12 @@ question_edit = ->
 $(document).ready(question_edit);
 $(document).on('page:load', question_edit);
 $(document).on('page:update', question_edit);
+
+question_channel = ->
+  App.cable.subscriptions.create('QuestionsChannel', {
+    received: (data) ->
+      $('.questions').append(JST['templates/question'](data))
+  });
+
+$(document).on('page:load', question_channel);
+$(document).ready(question_channel);

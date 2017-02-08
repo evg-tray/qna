@@ -13,4 +13,5 @@
     = link_to_edit_answer_with_form(question, answer)
     | &nbsp
     = link_to_set_best_answer(question, answer)
+    = render 'questions/comments', obj: answer
     hr

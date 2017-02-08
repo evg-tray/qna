@@ -11,3 +11,12 @@ answer_edit = ->
 $(document).ready(answer_edit);
 $(document).on('page:load', answer_edit);
 $(document).on('page:update', answer_edit);
+
+answer_channel = ->
+  App.cable.subscriptions.create('AnswersChannel', {
+    received: (data) ->
+      $('.answers').append(JST['templates/answer'](data))
+  });
+
+$(document).on('page:load', answer_channel);
+$(document).ready(answer_channel);
