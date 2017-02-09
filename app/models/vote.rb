@@ -5,8 +5,8 @@ class Vote < ApplicationRecord
   TYPES = %w(Answer Question)
 
   validates :votable_id, :votable_type, :rating, presence: true
-  validates :votable_type, inclusion: { :in => TYPES }
-  validates :rating, inclusion: { :in => [1, -1] }
+  validates :votable_type, inclusion: { in: TYPES }
+  validates :rating, inclusion: { in: [1, -1] }
   validate :author_validation
 
   def author_validation
