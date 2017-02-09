@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :set_question, only: [:create, :update, :destroy, :set_best_answer]
   before_action :set_answer, only: [:update, :destroy]
 
+  after_action :publish_answer, only: [:create]
+
   def create
     @answer = @question.answers.create(answer_params)
   end
@@ -31,5 +33,17 @@ class AnswersController < ApplicationController
 
   def answer_params
     params.require(:answer).permit(:body, attachments_attributes: [:file, :id, :_destroy]).merge(user_id: current_user.id)
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+    attachments = []
+    @answer.attachments.each { |a| attachments << {id: a.id, identifier: a.file.identifier, url: a.file.url} }
+    ActionCable.server.broadcast(
+      'answers',
+      answer: @answer,
+      attachments: attachments,
+      author_question: @question.user.id
+    )
   end
 end

@@ -39,4 +39,27 @@ feature 'Create answer', %q{
     expect(page).not_to have_selector('#answer_body')
   end
 
+  scenario 'answer appears to another user page', js: true do
+    body = Faker::Lorem.characters(55)
+
+    Capybara.using_session('user') do
+      sign_in(user)
+      visit question_path(question)
+    end
+
+    Capybara.using_session('another_user') do
+      visit question_path(question)
+    end
+
+    Capybara.using_session('user') do
+      fill_in 'Body', with: body
+      click_on 'Create answer'
+    end
+
+    Capybara.using_session('another_user') do
+      within '.answers' do
+        expect(page).to have_content body
+      end
+    end
+  end
 end

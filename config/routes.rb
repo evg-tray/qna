@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   end
   resources :attachments, only: [:destroy]
   resources :votes, only: [:create, :destroy]
+  resources :comments, only: [:create]
+  mount ActionCable.server => '/cable'
 end

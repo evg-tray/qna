@@ -11,10 +11,12 @@ RSpec.describe User, type: :model do
     let!(:question_another_user) { create(:question) }
     let!(:answer) { create(:answer, user: user) }
     let!(:answer_another_user) { create(:answer) }
-    let!(:vote_question) { create(:vote, user: user, votable: question) }
-    let!(:vote_question_another_user) { create(:vote, votable: question) }
-    let!(:vote_answer) { create(:vote, user: user, votable: answer) }
-    let!(:vote_answer_another_user) { create(:vote, votable: answer) }
+    let!(:voted_question) { create(:question) }
+    let!(:vote_question) { create(:vote, user: user, votable: voted_question) }
+    let!(:vote_question_another_user) { create(:vote, votable: voted_question) }
+    let!(:voted_answer) { create(:answer) }
+    let!(:vote_answer) { create(:vote, user: user, votable: voted_answer) }
+    let!(:vote_answer_another_user) { create(:vote, votable: voted_answer) }
 
     context 'author of' do
       context 'question' do
@@ -40,7 +42,7 @@ RSpec.describe User, type: :model do
     context 'voted of' do
       context 'question' do
         it 'return true if user voted to question' do
-          expect(user.voted_of?(question)).to eq true
+          expect(user.voted_of?(voted_question)).to eq true
         end
 
         it 'return false if user not voted to question' do
@@ -50,7 +52,7 @@ RSpec.describe User, type: :model do
 
       context 'answer' do
         it 'return true if user voted to answer' do
-          expect(user.voted_of?(answer)).to eq true
+          expect(user.voted_of?(voted_answer)).to eq true
         end
 
         it 'return false if user not voted to answer' do
@@ -62,7 +64,7 @@ RSpec.describe User, type: :model do
     context 'find vote' do
       context 'question' do
         it 'return Vote if user voted to question' do
-          expect(user.find_vote(question)).to eq vote_question
+          expect(user.find_vote(voted_question)).to eq vote_question
         end
 
         it 'return nil if user not voted to question' do
@@ -72,7 +74,7 @@ RSpec.describe User, type: :model do
 
       context 'answer' do
         it 'return Vote if user voted to answer' do
-          expect(user.find_vote(answer)).to eq vote_answer
+          expect(user.find_vote(voted_answer)).to eq vote_answer
         end
 
         it 'return nil if user not voted to answer' do

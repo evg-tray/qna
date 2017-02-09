@@ -1,0 +1,37 @@
+- unless gon.user_id == @answer.user_id
+  div class="answer-#{@answer.id}"
+    p
+      = @answer.body
+    div class="answer-votes-#{@answer.id}"
+      b.rating 0
+      | &nbsp
+      - if gon.user_id
+        div class= "answer-del-#{@answer.id} hidden"
+          a data-type="json" data-remote="true" rel="nofollow" data-method="delete" href="#" Delete vote
+        div class= "answer-up-down-#{@answer.id}"
+          a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/votes?up=true&votable_id=#{@answer.id}&votable_type=Answer" Up
+          | &nbsp
+          a data-type="json" data-remote="true" rel="nofollow" data-method="post" href="/votes?up=false&votable_id=#{@answer.id}&votable_type=Answer" Down
+    p Attachments:
+    ul
+      - for a in @attachments when a.id
+        li class="attachment-#{a.id}"
+          a href="#{a.url}" =a.identifier
+          | &nbsp
+    - if gon.user_id == @author_question
+      | &nbsp
+      | &nbsp
+      a data-remote="true" rel="nofollow" data-method="post" href="/questions/#{@answer.question_id}/answers/#{@answer.id}/set_best_answer" Set best
+    .comments
+    - if gon.user_id
+      form class="new_comment" id="new_comment" action="/comments.json" accept-charset="UTF-8" data-remote="true" method="post"
+        input name="utf8" type="hidden" value="✓"
+        p
+          label for="comment_body" Comment
+        p
+          textarea name="comment[body]" id="comment_body"
+        input value="#{@answer.id}" type="hidden" name="comment[commentable_id]" id="comment_commentable_id"
+        input value="Answer" type="hidden" name="comment[commentable_type]" id="comment_commentable_type"
+        p
+          input type="submit" name="commit" value="Create comment" data-disable-with="Create comment"
+    hr
