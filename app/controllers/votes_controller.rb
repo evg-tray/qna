@@ -1,14 +1,13 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
 
+  respond_to :json
+
   def create
-    if Vote.types.include?(params[:votable_type])
-      @vote = votable.votes.build(vote_params)
-      if @vote.save
-        render_success(votable, @vote.id, 'create')
-      else
-        render_error
-      end
+    return render_error unless Vote.types.include?(params[:votable_type])
+    @vote = votable.votes.build(vote_params)
+    if @vote.save
+      render_success(votable, @vote.id, 'create')
     else
       render_error
     end

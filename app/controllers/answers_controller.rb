@@ -5,16 +5,20 @@ class AnswersController < ApplicationController
 
   after_action :publish_answer, only: [:create]
 
+  respond_to :js
+
   def create
-    @answer = @question.answers.create(answer_params)
+    respond_with(@answer = @question.answers.create(answer_params))
   end
 
   def update
     @answer.update(answer_params) if current_user.author_of?(@answer)
+    respond_with(@answer)
   end
 
   def destroy
     @answer.destroy if current_user.author_of?(@answer)
+    respond_with(@answer)
   end
 
   def set_best_answer
@@ -43,7 +47,8 @@ class AnswersController < ApplicationController
       'answers',
       answer: @answer,
       attachments: attachments,
-      author_question: @question.user.id
+      author_question: @question.user.id,
+      question_id: @question.id
     )
   end
 end

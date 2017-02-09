@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
   after_action :publish_comment, only: [:create]
 
+  respond_to :json
+
   def create
     return render_error unless Comment.types.include?(params[:comment][:commentable_type])
     @comment = commentable.comments.build(comment_params)
