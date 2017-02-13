@@ -9,10 +9,7 @@ class CommentsController < ApplicationController
     return render_error unless Comment.types.include?(params[:comment][:commentable_type])
     @comment = commentable.comments.build(comment_params)
     if @comment.save
-      render json: {
-          body: @comment.body,
-          css_path: selector
-      }
+      render json: CommentsPresenter.new(@comment).as(:create)
     else
       render_error
     end
@@ -34,15 +31,6 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @comment.nil? || @comment.errors.any?
-    ActionCable.server.broadcast(
-      'comments',
-      css_path: selector,
-      body: @comment.body,
-      author_comment: @comment.user.id
-    )
-  end
-
-  def selector
-    @selector ||= @comment.commentable.is_a?(Question) ? '.question' : ".answer-#{@comment.commentable.id}"
+    ActionCable.server.broadcast('comments', CommentsPresenter.new(@comment).as(:publish))
   end
 end

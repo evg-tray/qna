@@ -8,7 +8,8 @@ class AnswersController < ApplicationController
   respond_to :js
 
   def create
-    respond_with(@answer = @question.answers.create(answer_params))
+    @answer = @question.answers.create(answer_params)
+    respond_with(@answer)
   end
 
   def update
@@ -41,14 +42,6 @@ class AnswersController < ApplicationController
 
   def publish_answer
     return if @answer.errors.any?
-    attachments = []
-    @answer.attachments.each { |a| attachments << {id: a.id, identifier: a.file.identifier, url: a.file.url} }
-    ActionCable.server.broadcast(
-      'answers',
-      answer: @answer,
-      attachments: attachments,
-      author_question: @question.user.id,
-      question_id: @question.id
-    )
+    ActionCable.server.broadcast('answers', AnswersPresenter.new(@answer).as(:publish))
   end
 end
