@@ -3,17 +3,16 @@ class CommentsController < ApplicationController
 
   after_action :publish_comment, only: [:create]
 
+  respond_to :json
+
   def create
-    if Comment.types.include?(params[:comment][:commentable_type])
-      @comment = commentable.comments.build(comment_params)
-      if @comment.save
-        render json: {
-            body: @comment.body,
-            css_path: selector
-        }
-      else
-        render_error
-      end
+    return render_error unless Comment.types.include?(params[:comment][:commentable_type])
+    @comment = commentable.comments.build(comment_params)
+    if @comment.save
+      render json: {
+          body: @comment.body,
+          css_path: selector
+      }
     else
       render_error
     end
@@ -44,6 +43,6 @@ class CommentsController < ApplicationController
   end
 
   def selector
-    @selector ||= @comment.commentable.class.name.underscore == 'question' ? '.question' : ".answer-#{@comment.commentable.id}"
+    @selector ||= @comment.commentable.is_a?(Question) ? '.question' : ".answer-#{@comment.commentable.id}"
   end
 end

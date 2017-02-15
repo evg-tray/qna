@@ -1,4 +1,4 @@
-- unless gon.user_id == @answer.user_id
+- if gon.user_id != @answer.user_id && gon.question_id == @question_id
   div class="answer-#{@answer.id}"
     p
       = @answer.body
