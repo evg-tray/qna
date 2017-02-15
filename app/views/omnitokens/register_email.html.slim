@@ -1,0 +1,11 @@
+h2 Step 2: Need verify your email to continue
+- if @user.has_token?(@auth)
+  p Check your email!
+- else
+  = form_tag register_email_path, method: :post do
+    = label_tag  :email
+    = text_field_tag :email
+    = hidden_field_tag :user_id, @user.id
+    = hidden_field_tag :auth_uid, @auth.uid
+    = hidden_field_tag :auth_provider, @auth.provider
+    = submit_tag 'Verify'
