@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170207192944) do
+ActiveRecord::Schema.define(version: 20170214165704) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20170207192944) do
     t.index ["attachable_id", "attachable_type"], name: "index_attachments_on_attachable_id_and_attachable_type", using: :btree
   end
 
+  create_table "authorizations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider", "uid"], name: "index_authorizations_on_provider_and_uid", using: :btree
+    t.index ["user_id"], name: "index_authorizations_on_user_id", using: :btree
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string   "body",             null: false
     t.integer  "user_id"
@@ -43,6 +53,17 @@ ActiveRecord::Schema.define(version: 20170207192944) do
     t.datetime "updated_at",       null: false
     t.index ["commentable_id", "commentable_type"], name: "index_comments_on_commentable_id_and_commentable_type", using: :btree
     t.index ["user_id"], name: "index_comments_on_user_id", using: :btree
+  end
+
+  create_table "omnitokens", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "authorization_id"
+    t.string   "email"
+    t.string   "token"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.index ["authorization_id"], name: "index_omnitokens_on_authorization_id", using: :btree
+    t.index ["user_id"], name: "index_omnitokens_on_user_id", using: :btree
   end
 
   create_table "questions", force: :cascade do |t|
@@ -86,7 +107,10 @@ ActiveRecord::Schema.define(version: 20170207192944) do
 
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "authorizations", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "omnitokens", "authorizations"
+  add_foreign_key "omnitokens", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "votes", "users"
 end

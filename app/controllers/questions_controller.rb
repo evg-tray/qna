@@ -7,15 +7,18 @@ class QuestionsController < ApplicationController
   respond_to :js, only: :update
 
   def index
-    respond_with(@questions = Question.all)
+    @questions = Question.all
+    respond_with(@questions)
   end
 
   def new
-    respond_with(@question = Question.new)
+    @question = Question.new
+    respond_with(@question)
   end
 
   def create
-    respond_with(@question = current_user.questions.create(question_params))
+    @question = current_user.questions.create(question_params)
+    respond_with(@question)
   end
 
   def show

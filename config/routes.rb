@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'questions#index'
   resources :questions do
@@ -11,4 +11,6 @@ Rails.application.routes.draw do
   resources :votes, only: [:create, :destroy]
   resources :comments, only: [:create]
   mount ActionCable.server => '/cable'
+  match "/register_email" => "omnitokens#register_email", :via => :post
+  match "/verify_email" => "omnitokens#verify_email", :via => :get
 end
