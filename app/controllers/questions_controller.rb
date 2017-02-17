@@ -4,6 +4,8 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: :show
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   respond_to :js, only: :update
 
   def index
@@ -27,12 +29,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    @question.update(question_params) if current_user.author_of?(@question)
+    @question.update(question_params)
     respond_with(@question)
   end
 
   def destroy
-    @question.destroy if current_user.author_of?(@question)
+    @question.destroy
     respond_with(@question)
   end
 

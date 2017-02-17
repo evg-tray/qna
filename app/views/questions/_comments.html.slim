@@ -1,7 +1,7 @@
 .comments
   - obj.comments.each do |comment|
     = render 'questions/comment', comment: comment
-- if user_signed_in?
+- if can?(:create, Comment)
   = form_for obj.comments.build, remote: true, format: :json do |f|
     p= f.label :body, 'Comment'
     p= f.text_area :body

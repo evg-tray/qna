@@ -1,5 +1,7 @@
 class OmnitokensController < ApplicationController
 
+  skip_authorization_check
+
   def register_email
     @user = User.find_by(id: params[:user_id])
     @auth = Authorization.find_by(uid: params[:auth_uid], provider: params[:auth_provider])

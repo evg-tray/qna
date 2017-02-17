@@ -3,6 +3,8 @@ class CommentsController < ApplicationController
 
   after_action :publish_comment, only: [:create]
 
+  authorize_resource
+
   respond_to :json
 
   def create

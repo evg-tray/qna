@@ -44,7 +44,7 @@ RSpec.describe AttachmentsController, type: :controller do
       end
 
       it 'try to delete attachment of answer' do
-        expect { delete :destroy, params: {id: attachment, format: :js} }.to_not change(answer.attachments, :count)
+        expect { delete :destroy, params: {id: attachment2, format: :js} }.to_not change(answer.attachments, :count)
       end
     end
   end
