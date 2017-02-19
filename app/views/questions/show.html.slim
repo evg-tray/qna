@@ -4,7 +4,7 @@ h2 Answers:
 .answers
   = render 'answers'
 br
-- if user_signed_in?
+- if can?(:create, Answer)
   = form_for [@question, @answer], remote: true do |f|
     = f.label :body
     .answer-errors

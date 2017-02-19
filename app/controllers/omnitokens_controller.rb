@@ -1,5 +1,7 @@
 class OmnitokensController < ApplicationController
 
+  skip_authorization_check
+
   def register_email
     @user = User.find_by(id: params[:user_id])
     @auth = Authorization.find_by(uid: params[:auth_uid], provider: params[:auth_provider])
@@ -7,19 +9,8 @@ class OmnitokensController < ApplicationController
   end
 
   def verify_email
-    token = Omnitoken.find_by(token: params[:token])
-    user = User.find_by(email: token.email)
-    Omnitoken.transaction do
-      if user
-        token.authorization.update(user: user)
-        tokenuser = token.user
-      else
-        token.user.update(email: token.email)
-      end
-      token.destroy
-      tokenuser.destroy if tokenuser
-    end
-    flash[:notice] = 'Your account updated.'
+    result = VerifyEmail.call(token: params[:token])
+    flash[:notice] = 'Your account updated.' if result.success?
     redirect_to root_path
   end
 end

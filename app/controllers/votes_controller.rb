@@ -1,6 +1,8 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!
 
+  authorize_resource
+
   respond_to :json
 
   def create
