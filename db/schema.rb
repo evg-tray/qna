@@ -78,19 +78,19 @@ ActiveRecord::Schema.define(version: 20170217110244) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.boolean  "admin"
+    t.boolean  "admin",                  default: false
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
@@ -98,12 +98,12 @@ ActiveRecord::Schema.define(version: 20170217110244) do
   create_table "votes", force: :cascade do |t|
     t.integer  "rating"
     t.integer  "user_id"
-    t.integer  "votable_id"
-    t.string   "votable_type"
+    t.integer  "votable_id",   null: false
+    t.string   "votable_type", null: false
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.index ["user_id", "votable_id", "votable_type"], name: "index_votes_on_user_id_and_votable_id_and_votable_type", unique: true, using: :btree
     t.index ["user_id"], name: "index_votes_on_user_id", using: :btree
-    t.index ["votable_id", "votable_type"], name: "index_votes_on_votable_id_and_votable_type", using: :btree
   end
 
   add_foreign_key "answers", "questions"

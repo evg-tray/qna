@@ -17,7 +17,7 @@ class VotesController < ApplicationController
 
   def destroy
     @vote = Vote.find(params[:id])
-    @vote.destroy if current_user.author_of?(@vote)
+    @vote.destroy
     if @vote.destroyed?
       render_success(@vote.votable, @vote.id, 'delete')
     else

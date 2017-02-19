@@ -25,7 +25,9 @@ class AnswersController < ApplicationController
   end
 
   def set_best_answer
-    @question.set_best_answer(Answer.find(params[:answer_id]))
+    @answer = Answer.find(params[:answer_id])
+    authorize!(:set_best_answer, @answer)
+    @question.set_best_answer(@answer)
   end
 
   private
