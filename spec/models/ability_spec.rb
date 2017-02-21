@@ -77,5 +77,7 @@ describe Ability do
       it { should be_able_to :destroy, vote, user: user }
       it { should_not be_able_to :destroy, vote_other_user, user: user }
     end
+
+    it { should be_able_to :me, User }
   end
 end

@@ -38,5 +38,7 @@ class Ability
     can :set_best_answer, Answer do |answer|
       answer.question.user == user && answer.question.best_answer != answer
     end
+
+    can :me, User
   end
 end
