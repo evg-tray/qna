@@ -68,7 +68,11 @@ describe Ability do
     end
 
     context 'Vote' do
-      it { should be_able_to :create, Vote }
+      it { should be_able_to :create, Vote.new(votable: question_other_user) }
+      it { should_not be_able_to :create, Vote.new(votable: question) }
+
+      it { should be_able_to :create, Vote.new(votable: answer_other_user) }
+      it { should_not be_able_to :create, Vote.new(votable: answer) }
 
       it { should be_able_to :destroy, vote, user: user }
       it { should_not be_able_to :destroy, vote_other_user, user: user }
