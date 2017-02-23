@@ -16,43 +16,15 @@ RSpec.describe VotesController, type: :controller do
 
     context 'valid attributes' do
       context 'question vote' do
-        it 'save vote in db' do
-          expect { create_vote.call }.to change(question.votes, :count).by(1)
-        end
-
-        it 'render success json with params' do
-          create_vote.call
-          expect(response).to have_http_status :success
-
-          json = JSON.parse(response.body)
-          question.reload
-
-          expect(json['rating']).to eq question.rating
-          expect(json['name']).to eq question.class.name.underscore
-          expect(json['id']).to eq question.id
-          expect(json['vote_id']).to eq assigns(:vote).id
-          expect(json['action']).to eq 'create'
-        end
+        let(:current_params) { question_params }
+        let(:object) { question }
+        it_behaves_like 'Create Vote'
       end
 
       context 'answer vote' do
-        it 'save vote in db' do
-          expect { create_vote.call(answer_params) }.to change(answer.votes, :count).by(1)
-        end
-
-        it 'render success json with params' do
-          create_vote.call(answer_params)
-          expect(response).to have_http_status :success
-
-          json = JSON.parse(response.body)
-          answer.reload
-
-          expect(json['rating']).to eq answer.rating
-          expect(json['name']).to eq answer.class.name.underscore
-          expect(json['id']).to eq answer.id
-          expect(json['vote_id']).to eq assigns(:vote).id
-          expect(json['action']).to eq 'create'
-        end
+        let(:current_params) { answer_params }
+        let(:object) { answer }
+        it_behaves_like 'Create Vote'
       end
     end
 
@@ -76,45 +48,15 @@ RSpec.describe VotesController, type: :controller do
     sign_in_user
 
     context 'question vote' do
-      before { create_vote.call }
-      it 'delete vote' do
-        expect { delete :destroy, params: { id: assigns(:vote), format: :json } }.to change(question.votes, :count).by(-1)
-      end
-
-      it 'render success json with params' do
-        delete :destroy, params: { id: assigns(:vote), format: :json }
-        expect(response).to have_http_status :success
-
-        json = JSON.parse(response.body)
-        question.reload
-
-        expect(json['rating']).to eq question.rating
-        expect(json['name']).to eq question.class.name.underscore
-        expect(json['id']).to eq question.id
-        expect(json['vote_id']).to eq assigns(:vote).id
-        expect(json['action']).to eq 'delete'
-      end
+      let(:current_params) { question_params }
+      let(:object) { question }
+      it_behaves_like 'Delete Vote'
     end
 
     context 'answer vote' do
-      before { create_vote.call(answer_params) }
-      it 'delete vote' do
-        expect { delete :destroy, params: { id: assigns(:vote), format: :json } }.to change(answer.votes, :count).by(-1)
-      end
-
-      it 'render success json with params' do
-        delete :destroy, params: { id: assigns(:vote), format: :json }
-        expect(response).to have_http_status :success
-
-        json = JSON.parse(response.body)
-        answer.reload
-
-        expect(json['rating']).to eq answer.rating
-        expect(json['name']).to eq answer.class.name.underscore
-        expect(json['id']).to eq answer.id
-        expect(json['vote_id']).to eq assigns(:vote).id
-        expect(json['action']).to eq 'delete'
-      end
+      let(:current_params) { answer_params }
+      let(:object) { answer }
+      it_behaves_like 'Delete Vote'
     end
   end
 end
