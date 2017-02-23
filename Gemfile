@@ -49,6 +49,9 @@ gem 'omniauth-twitter'
 gem 'interactor'
 gem 'cancancan'
 gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -78,6 +81,7 @@ group :test do
   gem 'launchy'
   gem 'capybara-email'
   gem 'json_spec'
+  gem 'json_matchers'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

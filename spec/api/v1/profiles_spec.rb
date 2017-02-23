@@ -15,6 +15,7 @@ describe 'Profile API' do
     context 'authorized' do
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
+      let(:parsed_response) { JSON.parse(response.body) }
 
       before { get '/api/v1/profiles/me', params: {format: :json, access_token: access_token.token} }
 
@@ -22,10 +23,12 @@ describe 'Profile API' do
         expect(response).to be_success
       end
 
-      %w(id email created_at updated_at admin).each do |attr|
-        it "contains #{attr}" do
-          expect(response.body).to be_json_eql(me.send(attr.to_sym).to_json).at_path(attr)
-        end
+      it'contains attributes' do
+        expect(parsed_response['id']).to eq me.id
+        expect(parsed_response['email']).to eq me.email
+        expect(parsed_response['created_at'].to_json).to eq me.created_at.to_json
+        expect(parsed_response['updated_at'].to_json).to eq me.updated_at.to_json
+        expect(parsed_response['admin']).to eq me.admin
       end
 
       %w(password encrypted_password).each do |attr|
@@ -53,6 +56,7 @@ describe 'Profile API' do
       let(:me) { create(:user) }
       let(:access_token) { create(:access_token, resource_owner_id: me.id) }
       let!(:other_users) { create_list(:user, 2) }
+      let(:parsed_response) { JSON.parse(response.body) }
 
       before { get '/api/v1/profiles', params: {format: :json, access_token: access_token.token} }
 
@@ -65,7 +69,7 @@ describe 'Profile API' do
       end
 
       it 'does no contain me' do
-        JSON.parse(response.body).each do |item|
+        parsed_response.each do |item|
           expect(item[:id]).to_not eq me.id
         end
       end
