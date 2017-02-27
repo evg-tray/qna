@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :answers
   has_many :votes
   has_many :authorizations
+  has_many :subscriptions, dependent: :destroy
 
   def author_of?(post)
     self == post.user

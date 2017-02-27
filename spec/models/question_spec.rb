@@ -9,6 +9,7 @@ RSpec.describe Question, type: :model do
   it { should belong_to(:best_answer).class_name('Answer') }
   it { should have_many(:attachments) }
   it { should accept_nested_attributes_for(:attachments) }
+  it { should have_many(:subscriptions).dependent(:destroy) }
   it_behaves_like 'votable'
 
   describe 'set best answer' do
@@ -47,6 +48,15 @@ RSpec.describe Question, type: :model do
 
     it 'not returns old questions' do
       expect(Question.digest).not_to eq questions_old
+    end
+  end
+
+  describe 'subscribe' do
+    let(:user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    it 'create subscription to author after create question' do
+      expect(question.subscriptions).to include(Subscription.find_by(user: user, question: question))
     end
   end
 end

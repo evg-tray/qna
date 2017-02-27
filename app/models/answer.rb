@@ -9,10 +9,18 @@ class Answer < ApplicationRecord
   validates :body, presence: true, length: {minimum: 20}
   validates :question_id, presence: true
 
+  after_create :notify_subsribers
+
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   scope :best_first, -> do
     best = joins(:question).where('questions.best_answer_id = answers.id')
     best + joins(:question).where('answers.id != questions.best_answer_id') unless best.empty?
+  end
+
+  private
+
+  def notify_subsribers
+    SubscriptionJob.perform_later(self)
   end
 end
