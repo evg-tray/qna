@@ -12,6 +12,8 @@ class Question < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
+  scope :digest, ->{ where(created_at: Date.current.at_beginning_of_day..Date.current.at_end_of_day) }
+
   def set_best_answer(answer)
     self.update(best_answer: answer) if self.answers.find(answer.id)
   end

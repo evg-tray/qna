@@ -25,8 +25,8 @@ module Qna
                        request_specs: false,
                        controller_spec: true
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
-
-     config.autoload_paths += %W(#{config.root}/lib)
     end
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.active_job.queue_adapter = :sidekiq
   end
 end

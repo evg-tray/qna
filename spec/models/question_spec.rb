@@ -36,4 +36,17 @@ RSpec.describe Question, type: :model do
       expect { question.set_best_answer(answer2) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe 'digest scope' do
+    let(:questions) { create_list(:question, 2) }
+    let(:questions_old) { create_list(:question, 2, created_at: Date.current.at_beginning_of_day - 1) }
+
+    it 'returns today questions' do
+      expect(Question.digest).to eq questions
+    end
+
+    it 'not returns old questions' do
+      expect(Question.digest).not_to eq questions_old
+    end
+  end
 end
