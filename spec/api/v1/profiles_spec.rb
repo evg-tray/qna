@@ -1,16 +1,6 @@
 describe 'Profile API' do
   describe 'GET /me' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles/me', params: {format: :json}
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles/me', params: {format: :json, access_token: '1111'}
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:me) { create(:user) }
@@ -19,9 +9,7 @@ describe 'Profile API' do
 
       before { get '/api/v1/profiles/me', params: {format: :json, access_token: access_token.token} }
 
-      it 'returns 200 status' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'API Successable'
 
       it'contains attributes' do
         expect(parsed_response['id']).to eq me.id
@@ -37,20 +25,14 @@ describe 'Profile API' do
         end
       end
     end
+
+    def do_request(options = {})
+      get '/api/v1/profiles/me', params: {format: :json}.merge(options)
+    end
   end
 
   describe 'GET /profiles' do
-    context 'unauthorized' do
-      it 'returns 401 status if there is no access_token' do
-        get '/api/v1/profiles', params: {format: :json}
-        expect(response.status).to eq 401
-      end
-
-      it 'returns 401 status if access_token is invalid' do
-        get '/api/v1/profiles', params: {format: :json, access_token: '1111'}
-        expect(response.status).to eq 401
-      end
-    end
+    it_behaves_like 'API Authenticable'
 
     context 'authorized' do
       let(:me) { create(:user) }
@@ -60,9 +42,7 @@ describe 'Profile API' do
 
       before { get '/api/v1/profiles', params: {format: :json, access_token: access_token.token} }
 
-      it 'returns 200 status' do
-        expect(response).to be_success
-      end
+      it_behaves_like 'API Successable'
 
       it 'contains users' do
         expect(response.body).to be_json_eql(other_users.to_json)
@@ -73,6 +53,10 @@ describe 'Profile API' do
           expect(item[:id]).to_not eq me.id
         end
       end
+    end
+
+    def do_request(options = {})
+      get '/api/v1/profiles', params: {format: :json}.merge(options)
     end
   end
 end

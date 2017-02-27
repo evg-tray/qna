@@ -81,7 +81,6 @@ group :test do
   gem 'launchy'
   gem 'capybara-email'
   gem 'json_spec'
-  gem 'json_matchers'
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
