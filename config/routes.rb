@@ -1,5 +1,12 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
   use_doorkeeper
+
+  authenticate :user, ->(user) { user.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root to: 'questions#index'
@@ -7,6 +14,7 @@ Rails.application.routes.draw do
     resources :answers, only: [:create, :update, :destroy] do
       match "/set_best_answer" => "answers#set_best_answer", :via => :post, :as => :set_best_answer
     end
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
   resources :attachments, only: [:destroy]
   resources :votes, only: [:create, :destroy]

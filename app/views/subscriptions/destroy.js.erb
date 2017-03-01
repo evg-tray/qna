@@ -1,0 +1,3 @@
+<% if @subscription.destroyed? %>
+  $('.subscription').html('<%= j render 'subscriptions/subscription', question: @question %>')
+<% end %>

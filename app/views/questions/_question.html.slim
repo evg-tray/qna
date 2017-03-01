@@ -3,6 +3,8 @@
     = question.title
   p
     = question.body
+  p.subscription
+    = render 'subscriptions/subscription', question: question
   div class="question-votes-#{question.id}"
     = render 'questions/vote', obj: question
   = render 'attachments/attachments', obj: question

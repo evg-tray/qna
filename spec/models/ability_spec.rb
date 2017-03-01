@@ -31,6 +31,8 @@ describe Ability do
     let(:vote_other_user) { create(:vote, votable: question_other_user) }
     let(:best_answer) { create(:answer, question: question) }
     let(:best_answer_other_user) { create(:answer, question: question_other_user) }
+    let(:subscription) { create(:subscription, user: user) }
+    let(:subscription_other_user) { create(:subscription) }
 
     it { should_not be_able_to :manage, :all }
     it { should be_able_to :read, :all }
@@ -78,6 +80,15 @@ describe Ability do
       it { should_not be_able_to :destroy, vote_other_user, user: user }
     end
 
-    it { should be_able_to :me, User }
+    context 'API' do
+      it { should be_able_to :me, User }
+    end
+
+    context 'Subscription' do
+      it { should be_able_to :create, Subscription }
+
+      it { should be_able_to :destroy, subscription, user: user }
+      it { should_not be_able_to :destroy, subscription_other_user, user: user }
+    end
   end
 end

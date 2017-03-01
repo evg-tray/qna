@@ -1,0 +1,3 @@
+<% unless @subscription.errors.present? %>
+  $('.subscription').html('<%= j render 'subscriptions/subscription', question: @question %>')
+<% end %>
