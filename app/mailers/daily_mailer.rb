@@ -1,7 +1,8 @@
 class DailyMailer < ApplicationMailer
 
   def digest(user)
-    @questions = Question.digest
-    mail(to: user.email, subject: 'Daily questions digest') if @questions
+    if @questions = Question.digest
+      mail(to: user.email, subject: 'Daily questions digest')
+    end
   end
 end
