@@ -2,7 +2,7 @@ require_relative '../acceptance_helper'
 
 feature 'Search', %q{
   In order to find question, answer, comment, user
-  As an user
+  As a user
   I want to be able to search these
 } do
 
@@ -11,6 +11,7 @@ feature 'Search', %q{
   given!(:user) { create(:user) }
   given!(:comment_question) { create(:comment, commentable: question) }
   given!(:comment_answer) { create(:comment, commentable: answer) }
+  given!(:questions) { create_list(:question, 10, body: 'text text text text text text text') }
 
   before do
     index
@@ -75,5 +76,17 @@ feature 'Search', %q{
     check 'scope_3'
     click_on 'Search'
     expect(page).to have_content 'No matches'
+  end
+
+  scenario 'pagination', sphinx: true do
+    fill_in 'Text', with: 'text'
+    check 'scope_0'
+    check 'scope_1'
+    check 'scope_2'
+    check 'scope_3'
+    click_on 'Search'
+    within '.results' do
+      expect(page).to have_selector('p', count: 5)
+    end
   end
 end
