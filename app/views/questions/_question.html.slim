@@ -1,13 +1,15 @@
 .question
-  h1
-    = question.title
-  p
-    = question.body
+  .panel.panel-primary
+    .panel-heading
+      = question.title
+    .panel-body
+      = question.body
+  = render 'attachments/attachments', obj: question
   p.subscription
     = render 'subscriptions/subscription', question: question
   div class="question-votes-#{question.id}"
     = render 'questions/vote', obj: question
-  = render 'attachments/attachments', obj: question
+
   = link_to_delete_question(question)
   | &nbsp
   = link_to_edit_question_with_form(question)

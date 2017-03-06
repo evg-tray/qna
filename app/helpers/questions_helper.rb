@@ -1,7 +1,7 @@
 module QuestionsHelper
   def link_to_delete_question(question)
     return unless can?(:destroy, question)
-    link_to 'Delete question', question_path(question), method: :delete
+    link_to 'Delete question', question_path(question), method: :delete, class: 'btn btn-danger'
   end
 
   def link_to_edit_question_with_form(question)

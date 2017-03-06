@@ -3,8 +3,9 @@
     = render 'questions/comment', comment: comment
 - if can?(:create, Comment)
   = form_for obj.comments.build, remote: true, format: :json do |f|
-    p= f.label :body, 'Comment'
-    p= f.text_area :body
+    .form-group
+      = f.label :body, 'New comment:'
+      = f.text_area :body, class: 'form-control'
     = f.hidden_field :commentable_id, value: obj.id
     = f.hidden_field :commentable_type, value: obj.class.name
-    p= f.submit 'Create comment'
+    p= f.submit 'Create comment', class: 'btn btn-success'

@@ -16,7 +16,7 @@ feature 'Create comment', %q{
       visit question_path(question)
       comment_text = Faker::Lorem.characters(25)
       within '.question .new_comment' do
-        fill_in 'Comment', with: comment_text
+        fill_in 'New comment:', with: comment_text
         click_on 'Create comment'
       end
       within '.question .comments' do
@@ -38,7 +38,7 @@ feature 'Create comment', %q{
 
       Capybara.using_session('user') do
         within '.question .new_comment' do
-          fill_in 'Comment', with: comment_text
+          fill_in 'New comment:', with: comment_text
           click_on 'Create comment'
         end
       end
@@ -54,7 +54,7 @@ feature 'Create comment', %q{
       sign_in(user)
       visit question_path(question)
       within '.question .new_comment' do
-        fill_in 'Comment', with: '123'
+        fill_in 'New comment:', with: '123'
         click_on 'Create comment'
       end
       within '.question .comments' do
@@ -69,7 +69,7 @@ feature 'Create comment', %q{
       visit question_path(question)
       comment_text = Faker::Lorem.characters(25)
       within ".answer-#{answer.id} .new_comment" do
-        fill_in 'Comment', with: comment_text
+        fill_in 'New comment:', with: comment_text
         click_on 'Create comment'
       end
       within ".answer-#{answer.id} .comments" do
@@ -91,7 +91,7 @@ feature 'Create comment', %q{
 
       Capybara.using_session('user') do
         within ".answer-#{answer.id} .new_comment" do
-          fill_in 'Comment', with: comment_text
+          fill_in 'New comment:', with: comment_text
           click_on 'Create comment'
         end
       end
@@ -107,7 +107,7 @@ feature 'Create comment', %q{
       sign_in(user)
       visit question_path(question)
       within ".answer-#{answer.id} .new_comment" do
-        fill_in 'Comment', with: '123'
+        fill_in 'New comment:', with: '123'
         click_on 'Create comment'
       end
       within ".answer-#{answer.id} .comments" do

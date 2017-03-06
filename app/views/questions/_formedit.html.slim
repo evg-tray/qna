@@ -1,10 +1,12 @@
-= link_to 'Edit', '', class: 'edit-question-link'
+= link_to 'Edit', '', class: 'edit-question-link btn btn-info'
 = form_for [question], remote: true do |f|
-  .question-errors
-  p
-    = f.label :title
-    = f.text_field :title
-  p
-    = f.label :body
-    = f.text_area :body
-  p= f.submit 'Save'
+  .panel.panel-default
+    .panel-body
+      .question-errors
+      .form-group
+        = f.label :title
+        = f.text_field :title, class: 'form-control'
+      .form-group
+        = f.label :body
+        = f.text_area :body, class: 'form-control'
+      = f.submit 'Save', class: 'btn btn-success'

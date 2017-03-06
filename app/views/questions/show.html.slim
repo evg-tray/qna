@@ -6,12 +6,14 @@ h2 Answers:
 br
 - if can?(:create, Answer)
   = form_for [@question, @answer], remote: true do |f|
-    = f.label :body
     .answer-errors
-    = f.text_area :body
+    .form-group
+      = f.label :body
+      = f.text_area :body, class: 'form-control'
     p
       = f.fields_for :attachments, @answer.attachments.build do |a|
         = render 'attachment_fields', f: a
       .links
-        = link_to_add_association 'Add file', f, :attachments
-    = f.submit 'Create answer'
+        = link_to_add_association 'Add file', f, :attachments, class: 'btn btn-warning'
+    = f.hidden_field :authenticity_token, value: form_authenticity_token
+    = f.submit 'Create answer', class: 'btn btn-success'

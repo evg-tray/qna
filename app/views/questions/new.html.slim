@@ -1,11 +1,14 @@
 = form_for @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
-  p Attachments:
-  = f.fields_for :attachments, @question.attachments.build do |a|
-    = render 'attachment_fields', f: a
+  .form-group
+    = f.label :title
+    = f.text_field :title, class: 'form-control'
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control'
+  .form-group
+    = f.label :Attachments
+    = f.fields_for :attachments, @question.attachments.build do |a|
+      = render 'attachment_fields', f: a
   .links
-    = link_to_add_association 'Add file', f, :attachments
-  = f.submit 'Create'
+    = link_to_add_association 'Add file', f, :attachments, class: 'btn btn-warning'
+  br= f.submit 'Create', class: 'btn btn-success'

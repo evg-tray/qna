@@ -1,6 +1,4 @@
-p= link_to 'Search', search_path
+p= link_to 'Ask question', new_question_path, class:'btn btn-success'
 .questions
   - @questions.each do |question|
-    = link_to question.title, question_path(question)
-    br
-p= link_to 'Ask question', new_question_path
+    p= link_to question.title, question_path(question)
