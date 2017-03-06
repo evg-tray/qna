@@ -1,11 +1,12 @@
 h1 Search:
-= form_tag search_path, method: :get
-  = label_tag :text
-  = text_field_tag :text, params[:text]
-  = label_tag :scopes, 'Scopes:'
-  - Search.types.each_with_index do |type, index|
-    = check_box_tag 'scopes[]', type, params[:scopes]&.include?(type), id: "scope_#{index}"
-    = label_tag "scope_#{index}", type.capitalize
-  = submit_tag 'Search'
+= form_tag search_path, method: :get, class: 'form-inline'
+  .form-group
+    = label_tag :text
+    = text_field_tag :text, params[:text], class: 'form-control'
+    = label_tag :scopes, 'Scopes:'
+    - Search.types.each_with_index do |type, index|
+      = check_box_tag 'scopes[]', type, params[:scopes]&.include?(type), id: "scope_#{index}"
+      = label_tag "scope_#{index}", type.capitalize
+    = submit_tag 'Search', class: 'btn btn-info'
 .results
   = render 'searches/search', results: @results if @results

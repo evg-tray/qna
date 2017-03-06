@@ -58,6 +58,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'will_paginate'
 gem 'sprockets', '3.6.3'
+gem 'rails-assets-bootstrap', '3.3.7', source: 'https://rails-assets.org'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

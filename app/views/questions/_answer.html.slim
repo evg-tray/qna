@@ -1,17 +1,18 @@
 - unless answer.id.nil?
-  div class="answer-#{answer.id}"
-    - if question.best_answer == answer
-      p
-        b Best answer:
-    p
-      = answer.body
-    div class="answer-votes-#{answer.id}"
-      = render 'questions/vote', obj: answer
-    = render 'attachments/attachments', obj: answer
-    = link_to_delete_answer(question, answer)
-    | &nbsp
-    = link_to_edit_answer_with_form(question, answer)
-    | &nbsp
-    = link_to_set_best_answer(question, answer)
-    = render 'questions/comments', obj: answer
-    hr
+  .panel.panel-default
+    .panel-body
+      div class="answer-#{answer.id}"
+        - if question.best_answer == answer
+          p
+            b Best answer:
+        p
+          = answer.body
+        div class="answer-votes-#{answer.id}"
+          = render 'questions/vote', obj: answer
+        = render 'attachments/attachments', obj: answer
+        = link_to_delete_answer(question, answer)
+        | &nbsp
+        = link_to_edit_answer_with_form(question, answer)
+        | &nbsp
+        = link_to_set_best_answer(question, answer)
+        = render 'questions/comments', obj: answer

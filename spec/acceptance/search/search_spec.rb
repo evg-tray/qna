@@ -21,7 +21,9 @@ feature 'Search', %q{
   scenario 'search question', sphinx: true do
     fill_in 'Text', with: question.title
     check 'scope_0'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content question.title
     expect(page).to have_content question.body
   end
@@ -29,7 +31,9 @@ feature 'Search', %q{
   scenario 'search answer', sphinx: true do
     fill_in 'Text', with: answer.body
     check 'scope_1'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content question.title
     expect(page).to have_content answer.body
   end
@@ -37,7 +41,9 @@ feature 'Search', %q{
   scenario 'search comment to question', sphinx: true do
     fill_in 'Text', with: comment_question.body
     check 'scope_2'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content question.title
     expect(page).to have_content comment_question.body
   end
@@ -45,7 +51,9 @@ feature 'Search', %q{
   scenario 'search comment to answer', sphinx: true do
     fill_in 'Text', with: comment_answer.body
     check 'scope_2'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content question.title
     expect(page).to have_content answer.body
     expect(page).to have_content comment_answer.body
@@ -54,7 +62,9 @@ feature 'Search', %q{
   scenario 'search user', sphinx: true do
     fill_in 'Text', with: user.email
     check 'scope_3'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content user.email
   end
 
@@ -64,7 +74,9 @@ feature 'Search', %q{
     check 'scope_1'
     check 'scope_2'
     check 'scope_3'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content user.email
   end
 
@@ -74,7 +86,9 @@ feature 'Search', %q{
     check 'scope_1'
     check 'scope_2'
     check 'scope_3'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     expect(page).to have_content 'No matches'
   end
 
@@ -84,7 +98,9 @@ feature 'Search', %q{
     check 'scope_1'
     check 'scope_2'
     check 'scope_3'
-    click_on 'Search'
+    within '.form-group' do
+      click_on 'Search'
+    end
     within '.results' do
       expect(page).to have_selector('p', count: 5)
     end

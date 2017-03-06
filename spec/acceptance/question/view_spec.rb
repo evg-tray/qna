@@ -32,11 +32,11 @@ feature 'View questions', %q{
     question.set_best_answer(answers[0])
     visit question_path(question)
 
-    expect(page.find('.answers div:first-child')).to have_content answers[0].body
+    expect(page.find('.answers .panel.panel-default:first-child')).to have_content answers[0].body
 
     question.set_best_answer(answers[1])
     visit question_path(question)
 
-    expect(page.find('.answers div:first-child')).to have_content answers[1].body
+    expect(page.find('.answers .panel.panel-default:first-child')).to have_content answers[1].body
   end
 end
