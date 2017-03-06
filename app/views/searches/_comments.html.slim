@@ -1,0 +1,11 @@
+p
+  | In question:
+  | &nbsp
+  - if result.commentable_type == 'Question'
+    = link_to result.commentable.title, question_path(result.commentable)
+  - else
+    = link_to result.commentable.question.title, question_path(result.commentable.question)
+    br
+    = "To answer: #{result.commentable.body}"
+  br
+  = result.body

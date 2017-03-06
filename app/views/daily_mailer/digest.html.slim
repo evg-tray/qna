@@ -1,4 +1,4 @@
 h1 Daily digest
-- @questions.each do |question|
+- @questions.find_each do |question|
   = link_to question.title, question_url(question)
   br

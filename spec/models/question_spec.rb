@@ -54,9 +54,10 @@ RSpec.describe Question, type: :model do
   describe 'subscribe' do
     let(:user) { create(:user) }
     let(:question) { create(:question, user: user) }
+    let(:user_subscription) { Subscription.find_by(user: user, question: question) }
 
     it 'create subscription to author after create question' do
-      expect(question.subscriptions).to include(Subscription.find_by(user: user, question: question))
+      expect(question.subscriptions).to include(user_subscription)
     end
   end
 end

@@ -1,3 +1,4 @@
+p= link_to 'Search', search_path
 .questions
   - @questions.each do |question|
     = link_to question.title, question_path(question)

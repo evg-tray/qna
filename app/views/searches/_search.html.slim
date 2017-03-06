@@ -1,0 +1,7 @@
+h2 Results:
+- if results.empty?
+  p No matches
+- else
+  - results.each do |res|
+    = render "searches/#{res.model_name.to_s.downcase}s", result: res
+  = will_paginate results
