@@ -59,7 +59,7 @@ gem 'thinking-sphinx'
 gem 'will_paginate'
 gem 'sprockets', '3.6.3'
 gem 'twitter-bootstrap-rails'
-gem 'dotenv'
+gem 'dotenv-rails'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 group :development, :test do
@@ -70,7 +70,6 @@ group :development, :test do
   gem 'faker'
   gem 'database_cleaner'
   gem 'capybara-webkit'
-  gem 'dotenv-rails'
 end
 
 group :development do
