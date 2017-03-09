@@ -4,3 +4,6 @@ test:
 development:
   mysql41: 9306
   min_infix_len: 3
+production:
+  mysql41: 9312
+  min_infix_len: 3
