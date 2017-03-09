@@ -1,1 +1,3 @@
-p=@body
+.panel.panel-default
+  .panel-body
+    =@body

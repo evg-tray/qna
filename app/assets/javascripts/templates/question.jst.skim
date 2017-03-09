@@ -1,2 +1,2 @@
-a href="/questions/#{@id}" =@title
-br
+p
+  a href="/questions/#{@id}" =@title
