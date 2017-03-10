@@ -61,6 +61,7 @@ gem 'sprockets', '3.6.3'
 gem 'twitter-bootstrap-rails'
 gem 'dotenv-rails'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'unicorn'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -85,6 +86,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
 
 group :test do
