@@ -1,9 +1,10 @@
 .question
-  .panel.panel-primary
-    .panel-heading
-      = question.title
-    .panel-body
-      = question.body
+  - cache question do
+    .panel.panel-primary
+      .panel-heading
+        = question.title
+      .panel-body
+        = question.body
   = render 'attachments/attachments', obj: question
   p.subscription
     = render 'subscriptions/subscription', question: question

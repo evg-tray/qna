@@ -2,11 +2,13 @@
   .panel.panel-default
     .panel-body
       div class="answer-#{answer.id}"
-        - if question.best_answer == answer
+        - cache ['best_answer', question, answer]
+          - if question.best_answer == answer
+            p
+              b Best answer:
+        - cache answer do
           p
-            b Best answer:
-        p
-          = answer.body
+            = answer.body
         div class="answer-votes-#{answer.id}"
           = render 'questions/vote', obj: answer
         = render 'attachments/attachments', obj: answer

@@ -1,4 +1,5 @@
-b.rating= obj.rating
+- cache ['rating', obj] do
+  b.rating= obj.rating
 | &nbsp
 - if user_signed_in? && ! current_user.author_of?(obj)
   div class= delete_vote_class(obj)
