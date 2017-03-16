@@ -3,6 +3,7 @@
   ul
     - obj.attachments.each do |a|
       li class="attachment-#{a.id}"
-        = link_to a.file.identifier, a.file.url
+        - cache [a] do
+          = link_to a.file.identifier, a.file.url
         | &nbsp
         = link_to_delete_attachment(a)

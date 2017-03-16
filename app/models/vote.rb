@@ -1,5 +1,5 @@
 class Vote < ApplicationRecord
-  belongs_to :votable, polymorphic: true
+  belongs_to :votable, polymorphic: true, touch: true
   belongs_to :user
 
   TYPES = %w(Answer Question)
